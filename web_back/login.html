@@ -52,6 +52,7 @@
 
         <script src="./js/./jquery-1.12.4.min.js"></script>
         <script src="./js/bootstrap/js/./bootstrap.min.js"></script>
+        <script src="./js/./tool/./user.js"></script>
 
         <script>
             // 1 点击登录按钮获取账号密码内容
@@ -67,28 +68,18 @@
                     $("#modal_info").text("不能为空")
                     $('#myModal').modal('show')
                 }
-                //
-                else {
-                    $.post(
-                        "http://localhost:8000/admin/login", {
-                            user_name: account,
-                            password: password
-                        },
-                        function(res) {
-                            console.log(res)
-                            if (res.code === 400) {
+                //传入参数账号和密码
+                user.login(account, password, function(res) {
+                    console.log(res)
+                    if (res.code === 400) {
 
-                                $("#modal_info").text(res.msg)
-                                $('#myModal').modal('show')
-                            } else if (res.code === 200) {
-                                // $("#modal_info").text(res.msg)
-                                // $('#myModal').modal('show')
-                                //     // $("#modal_ok").
-                                location.href = "./index.html"
-                            }
-                        }
-                    )
-                }
+                        $("#modal_info").text(res.msg)
+                        $('#myModal').modal('show')
+                    } else if (res.code === 200) {
+
+                        location.href = "./index.html"
+                    }
+                })
 
             })
         </script>
