@@ -2,7 +2,7 @@ var user = {
     //管理员登录验证接口
     login: function(account, password, callback) {
         $.post(
-            "http://localhost:8000/admin/login", {
+            APIURLS.user_login, {
                 user_name: account,
                 password: password
             },
@@ -13,13 +13,13 @@ var user = {
     },
     // 管理员退出接口
     logout: function(callback) {
-        $.post("http://localhost:8000/admin/logout", function(res) {
+        $.post(APIURLS.user_logout, function(res) {
             callback(res);
         })
     },
     // 管理原信息接口
     getinfo: function(callback) {
-        $.get("http://localhost:8000/admin/getuser", function(res) {
+        $.get(APIURLS.user_getinfo, function(res) {
             callback(res);
         })
     }
