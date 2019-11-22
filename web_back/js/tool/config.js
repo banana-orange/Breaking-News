@@ -16,7 +16,10 @@ var APIURLS = {
     category_show: baseUrl + "admin/category_search",
     // 删除文章类型
     category_del: baseUrl + "admin/category_delete",
-
+    // 添加文章类型
+    category_add: baseUrl + "admin/category_add",
+    // 编辑文章类型
+    category_edit: baseUrl + "admin/category_edit",
 
 
 }
