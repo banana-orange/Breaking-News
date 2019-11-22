@@ -21,5 +21,7 @@ var APIURLS = {
     // 编辑文章类型
     category_edit: baseUrl + "admin/category_edit",
 
-
+    // 三文章类型接口
+    // 文章类型显示
+    article_show: baseUrl + 'admin/search',
 }
