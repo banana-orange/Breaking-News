@@ -24,4 +24,6 @@ var APIURLS = {
     // 三文章类型接口
     // 文章类型显示
     article_show: baseUrl + 'admin/search',
+    // 文章删除
+    article_del: baseUrl + "admin/article_delete",
 }
