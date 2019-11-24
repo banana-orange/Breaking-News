@@ -28,4 +28,7 @@ var APIURLS = {
     article_del: baseUrl + "admin/article_delete",
     // 文章添加
     article_add: baseUrl + "admin/article_publish",
+    // 文章修改
+    article_edit: baseUrl + "admin/article_edit",
+
 }
