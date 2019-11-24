@@ -96,11 +96,11 @@
     <script src="./js/./tool/./category.js"></script>
     <script src="./js/./tool/./config.js"></script>
     <script src="./js/./template-web.js"></script>
-
+    <script src="./js/./tool/article.js"></script>
     <script id="cate_temp" type="text/html">
         <option>所有分类</option>
         {{each data item }}
-        <option>{{item.name}}</option>
+        <option value={{item.id}}>{{item.name}}</option>
 
         {{/each}}
     </script>
@@ -125,7 +125,12 @@
         // 点击发布通过fd获得表单信息，调用接口 参数传入接口
         $("#issue").click(function() {
             var fd = new FormData(document.getElementById("myform"));
-            console.log(fd.get("title"))
+            fd.append("state", "已发布");
+            fd.set('content', tinyMCE.activeEditor.getContent())
+            console.log(fd.get("content"))
+            article.add(fd, function(res) {
+                console.log(res)
+            })
         })
     </script>
 </body>

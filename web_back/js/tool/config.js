@@ -26,4 +26,6 @@ var APIURLS = {
     article_show: baseUrl + 'admin/search',
     // 文章删除
     article_del: baseUrl + "admin/article_delete",
+    // 文章添加
+    article_add: baseUrl + "admin/article_publish",
 }
