@@ -81,14 +81,14 @@
             <form action="" class="comment_form">
                 <div class="form_group">
                     <label>用户名：</label>
-                    <input type="text" placeholder="请输入用户名" class="comment_name">
+                    <input type="text" placeholder="请输入用户名" class="comment_name" id="article_name">
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" class="comment_input" id="article_content_1"></textarea>
                 </div>
                 <div class="form_group">
-                    <input type="submit" name="" value="评 论" class="comment_sub"></div>
+                    <input type="button" name="" value="评 论" class="comment_sub" id="pinglun"></div>
             </form>
 
             <div class="comment_count">
@@ -206,6 +206,7 @@
     <script src="./js/./tool/./config.js"></script>
     <script src="./js/./tool/./article.js"></script>
     <script src="./js/./tool/./category.js"></script>
+    <script src="./js/./tool/./comment.js"></script>
 
     <script>
         // 获取地址栏a传过来的id，调取接口把id穿进去获取数据把数据渲染到页面上
@@ -219,14 +220,32 @@
             var typeId = res.data.type;
 
             category.show(function(res) {
-                console.log(res)
+                // console.log(res)
                 var rs = res.data.find(function(n) {
                     if (typeId == n.id) {
                         return true;
                     }
                 })
-
+                console.log(rs)
                 $("#article_type").html(rs.name);
+            })
+        })
+
+        // 获取评论信息调取接口传到接口上
+        $("#pinglun").click(function() {
+            var name = $("#article_name").val();
+            var content = $("#article_content_1").val()
+            if (name == "" || content == "") {
+                alert("输入不能为空")
+                return
+            }
+            comment.add(name, content, id, function(res) {
+                console.log(res)
+                if (res.code === 200) {
+                    alert("添加成功");
+                    $("#article_name").val("");
+                    $("#article_content_1").val("")
+                }
             })
         })
     </script>

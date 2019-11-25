@@ -31,4 +31,7 @@ var APIURLS = {
     // 文章修改
     article_edit: baseUrl + "admin/article_edit",
 
+    // 添加评论
+    comment_add: baseUrl + "post_comment",
+
 }
