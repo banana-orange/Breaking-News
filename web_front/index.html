@@ -28,23 +28,15 @@
         <div class="menu">
             <div class="menu_collapse fl">
                 <a href="javascript:;" class="level_one"><i class="fa fa-list-ul"></i>全部分类</a>
-                <ul class="level_two">
-                    <li class="up"></li>
-                    <li><a href="#">最 新</a></li>
-                    <li><a href="#">科 技</a></li>
-                    <li><a href="#">股 市</a></li>
-                    <li><a href="#">商 品</a></li>
-                    <li><a href="#">外 汇</a></li>
-                    <li><a href="#">公 司</a></li>
+                <ul class="level_two" id="xia_liebiao">
+                    <!-- <li class="up"></li>
+                    <li><a href="#">最 新</a></li> -->
+
                 </ul>
             </div>
-            <ul class="left_menu fl">
-                <li><a href="#">最 新</a></li>
-                <li><a href="#">科 技</a></li>
-                <li><a href="#">股 市</a></li>
-                <li><a href="#">商 品</a></li>
-                <li><a href="#">外 汇</a></li>
-                <li><a href="#">公 司</a></li>
+            <ul class="left_menu fl" id="heng_liebiao">
+                <!-- <li><a href="#">最 新</a></li> -->
+
             </ul>
             <ul class="right_menu fr">
                 <li><a href="#">科技专题</a></li>
@@ -55,27 +47,11 @@
 
     <div class="main_con clearfix">
         <div class="left_con">
-            <ul class="focus_list">
-                <li class="first">
+            <ul class="focus_list" id="zhutu_liebiao">
+                <!-- <li class="first">
                     <a href="#"><img src="images/pic01.jpg" alt=""></a>
                     <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic02.jpg" alt=""></a>
-                    <p>图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic03.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic05.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic06.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
+                </li> -->
             </ul>
 
             <div class="common_title">
@@ -215,11 +191,55 @@
             <span>|</span>
             <a href="#">招聘人才</a>
             <span>|</span>
-            <a href="#">友情链接</a>		
+            <a href="#">友情链接</a>
         </div>
-        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司   All Rights Reserved</p>
-        <p>电话：0755-****888    粤ICP备*******8号</p>
+        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司 All Rights Reserved</p>
+        <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/./tool/./config.js"></script>
+    <script src="./js/./tool/./category.js"></script>
+    <script src="./js/./tool/./article.js"></script>
+    <script src="./js/./template-web.js"></script>
+
+    <!-- 列表显示模板 -->
+    <script id="leixing_lioebiao" type="text/html">
+        {{each data n}}
+        <li><a href="javascript:;">{{n.name}}</a></li>
+        {{/each}}
+    </script>
+    <!-- 主图模板 -->
+    <script id="zhutu" type="text/html">
+        {{each data n i}} {{if i==0}}
+        <li class="first">
+            <a href="./article.html?id={{n.id}}" target="_blank"><img src="{{n.cover}}" alt=""></a>
+            <p>{{n.title}}</p>
+        </li>
+        {{else}}
+        <li>
+            <a href="./article.html?id={{n.id}}" target="_blank"><img src="{{n.cover}}" alt=""></a>
+            <p>{{n.title}}</p>
+        </li>
+        {{/if}} {{/each}}
+
+
+    </script>
+
+    <script>
+        // 调取文章类别接口 然后使用模板引擎把数据渲染到页面上
+        category.show(function(res) {
+            var htmlSrc = template("leixing_lioebiao", res)
+            $("#xia_liebiao").html('<li class="up"></li>' + htmlSrc);
+            $("#heng_liebiao").html(htmlSrc)
+        })
+
+        // 调取文章详细内容把图片和文字显示在新闻图上
+        article.show(function(res) {
+            var htmlSrc1 = template("zhutu", res);
+            console.log(res, htmlSrc1);
+            $("#zhutu_liebiao").html(htmlSrc1)
+        })
+    </script>
 
 </body>
 
