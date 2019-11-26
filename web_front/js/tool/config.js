@@ -33,5 +33,7 @@ var APIURLS = {
 
     // 添加评论
     comment_add: baseUrl + "post_comment",
+    // 显示评论
+    comment_get: baseUrl + "get_comments",
 
 }

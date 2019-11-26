@@ -234,7 +234,7 @@
         })
 
         // 调取文章详细内容把图片和文字显示在新闻图上
-        article.show(function(res) {
+        article.getFiveFocus(function(res) {
             var htmlSrc1 = template("zhutu", res);
             console.log(res, htmlSrc1);
             $("#zhutu_liebiao").html(htmlSrc1)
