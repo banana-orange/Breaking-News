@@ -60,9 +60,9 @@
             // 2 判断是否为空
             // 3 调用接口 http://localhost:8000/admin/login 
             // 4 验证是否通过  引用模态框 提示用户
-            $("#btnEntry").click(function() {
-                var account = $("#account").val().trim();
-                var password = $("#password").val().trim();
+            $("#btnEntry").click(() => {
+                let account = $("#account").val().trim();
+                let password = $("#password").val().trim();
                 // console.log(account, password);
                 if (account === "" || password === "") {
                     // alert("不能为空")
@@ -70,13 +70,17 @@
                     $('#myModal').modal('show')
                 }
                 //传入参数账号和密码
-                user.login(account, password, function(res) {
-                    console.log(res)
-                    if (res.code === 400) {
+                user.login(account, password, res => {
+                    let {
+                        code
+                    } = res;
+                    console.log(code)
+
+                    if (code === 400) {
 
                         $("#modal_info").text(res.msg)
                         $('#myModal').modal('show')
-                    } else if (res.code === 200) {
+                    } else if (code === 200) {
 
                         location.href = "./index.html"
                     }

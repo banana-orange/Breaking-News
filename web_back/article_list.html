@@ -121,44 +121,47 @@
     <script>
         // 所有分类下拉列表
         // 调用接口创建模板引擎把数据显示在页面上。、
-        category.show(function(res) {
-            var htmlStr2 = template("temp_cate", res)
-
+        category.show(res => {
+            let htmlStr2 = template("temp_cate", res)
             $("#selCategory").html(htmlStr2)
-
         })
     </script>
     <script>
-        var curPage = ""; //表示当前要展示第几页
-        var type = ''; // 表示文章的类型
-        var state = ''; // 表示文章的状态
-        var curTotalPage = ""
+        let curPage = ""; //表示当前要展示第几页
+        let type = ''; // 表示文章的类型
+        let state = ''; // 表示文章的状态
+        let curTotalPage = ""
         wenzhang_show()
             // 调取接口获取文章列表信息并显示在页面上
         function wenzhang_show() {
-            article.show(curPage, type, state, function(res) {
-                if (res.code === 200) {
-                    var htmlStr = template("temp_table", res)
-                    console.log(res)
+            article.show(curPage, type, state, res => {
+                let {
+                    code,
+                    totalPage
+                } = res;
+
+                console.log(res, totalPage, code)
+                if (code === 200) {
+                    let htmlStr = template("temp_table", res)
                     $("#articleContainer").html(htmlStr)
 
-                    if (curTotalPage != res.totalPage) {
+                    if (curTotalPage != totalPage) {
                         // 由于插件对总页数的变化不敏感，所以如果总页数不同，则要
                         // 先销毁，再创建
                         // 参考：http://josecebe.github.io/twbs-pagination/
                         $('#pagination-demo').twbsPagination('destroy');
-                        curTotalPage = res.totalPage
+                        curTotalPage = totalPage
                     }
 
                     // 分页部分
                     $('#pagination-demo').twbsPagination({
-                        totalPages: res.totalPage, // 总页数
+                        totalPages: totalPage, // 总页数
                         visiblePages: 7, // 可见页数
                         first: '首页',
                         prev: '上一页',
                         next: '下一页',
                         last: '尾页',
-                        onPageClick: function(event, page) {
+                        onPageClick: (event, page) => {
                             // console.log(event, page);
                             curPage = page;
                             wenzhang_show();
@@ -174,7 +177,7 @@
         }
 
         // 点击筛选按钮获取获取分类和已发布里的value赋值给全局变量再传给接口里
-        $("#btnSearch").click(function() {
+        $("#btnSearch").click(() => {
             // console.log("ASd")
             type = $("#selCategory").val();
             state = $("#selStatus").val();
@@ -186,11 +189,14 @@
         $("#articleContainer").on("click", ".del", function() {
             var id = $(this).attr("data_id");
 
-            article.del(id, function(res) {
+            article.del(id, res => {
+                let {
+                    code
+                } = res;
                 if (window.confirm("您确定要删除么？") === false) {
                     return;
                 }
-                if (res.code === 200) {
+                if (code === 200) {
                     wenzhang_show()
                 }
             })

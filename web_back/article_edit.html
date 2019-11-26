@@ -90,18 +90,27 @@
 
     <script>
         // 获取网址传过来的id然后调取接口渲染到页面上
-        var id = location.search.substring(4);
-        article.getDetail(id, function(res) {
+        let id = location.search.substring(4);
+        article.getDetail(id, res => {
             console.log(res)
-            $("#article_title").val(res.data.title);
-            $("#article_cover").prop("src", res.data.cover);
-            $("#article_date").val(res.data.date);
-            $("#rich_content").val(res.data.content);
-            var leixng = res.data.type;
+            let {
+                data: {
+                    title,
+                    cover,
+                    date,
+                    content,
+                    type,
+                }
+            } = res
+            $("#article_title").val(title);
+            $("#article_cover").prop("src", cover);
+            $("#article_date").val(date);
+            $("#rich_content").val(content);
+            let leixng = type;
 
             // 显示文章类型
-            category.show(function(res) {
-                var htmlSrc = template("temp_cate", res)
+            category.show(res => {
+                let htmlSrc = template("temp_cate", res)
                 console.log(res, htmlSrc)
                 $("#categoryContainer").html(htmlSrc);
                 $("#categoryContainer").val(leixng);
@@ -109,15 +118,12 @@
         })
 
         // 点击修改调取接口获取文章信息传入、 fd格式
-        $("#edit").click(function() {
-            var fd = new FormData(document.getElementById("myform"));
+        $("#edit").click(() => {
+            let fd = new FormData(document.getElementById("myform"));
             fd.append("id", id)
                 // 单独处理富文本编辑器
             fd.set('content', tinyMCE.activeEditor.getContent())
-            article.edit(fd, function(res) {
-                console.log(res)
-            })
-
+            article.edit(fd, res => console.log(res))
         })
     </script>
 </body>

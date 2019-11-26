@@ -57,8 +57,8 @@
     <script src="./js/./tool/config.js"></script>
     <script src="./js/./tool/user.js"></script>
     <script>
-        var $level01 = $('.level01');
-        var $subli = $('.level02 li')
+        let $level01 = $('.level01');
+        let $subli = $('.level02 li')
         $level01.click(function() {
             $level01.not($(this)).removeClass('active');
             $(this).addClass('active');
@@ -92,7 +92,7 @@
 
         resizeFrame();
 
-        $(window).resize(function() {
+        $(window).resize(() => {
             resizeFrame();
         })
 
@@ -110,10 +110,16 @@
 
     <script>
         // 调用接口把管理员信息显示在页面上
-        user.getinfo(function(res) {
-            console.log(res)
-            $("#Administrator").text(res.data.nickname).css("fontStyle", "normal");
-            $("#AdministratorImg").prop("src", res.data.user_pic);
+        user.getinfo((res) => {
+            let {
+                data: {
+                    nickname,
+                    user_pic
+                }
+            } = res;
+            // console.log(res, nickname, user_pic)
+            $("#Administrator").text(nickname).css("fontStyle", "normal");
+            $("#AdministratorImg").prop("src", user_pic);
         })
 
 
@@ -124,11 +130,13 @@
 
 
         // 点击退出按钮调用接口然后返回到登录页面
-        $("#drop").click(function() {
+        $("#drop").click(() => {
             // console.log("asdad")
             user.logout(function(res) {
-                // console.log(res)
-                if (res.code === 200) {
+                let {
+                    code
+                } = res;
+                if (code === 200) {
                     location.href = "./login.html"
                 }
             });

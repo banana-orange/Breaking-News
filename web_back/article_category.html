@@ -139,9 +139,12 @@
         show()
 
         function show() {
-            category.show(function(res) {
-                var htmlStr = template("tempTable", res)
-                if (res.code === 200) {
+            category.show(res => {
+                let {
+                    code
+                } = res;
+                let htmlStr = template("tempTable", res)
+                if (code === 200) {
                     // console.log(res, htmlStr)
                     $("#list_body").html(htmlStr)
 
@@ -156,14 +159,17 @@
             if (window.confirm("您确定要删除么？") === false) {
                 return
             }
-            var id = $(this).attr("data-id");
+            let id = $(this).attr("data-id");
 
-            category.del(id, function(res) {
-                console.log(res)
-                    // if (confirm("您确定要删除嘛？") === false) {
-                    //     return
-                    // }
-                if (res.code === 200) {
+            category.del(id, res => {
+                let {
+                    code,
+                } = res
+                // console.log(code)
+                // if (confirm("您确定要删除嘛？") === false) {
+                //     return
+                // }
+                if (code === 200) {
                     show()
 
                 } else {
@@ -175,9 +181,9 @@
         })
 
         // 点击新增弹出模态框，获取内容请空格，判断是否为空，调用接口，
-        $("#model_add").click(function() {
-                var classify_name = $("#classify_name").val().trim();
-                var classify_alias = $("#classify_alias").val().trim();
+        $("#model_add").click(() => {
+                let classify_name = $("#classify_name").val().trim();
+                let classify_alias = $("#classify_alias").val().trim();
                 console.log(classify_name, classify_alias)
                 if (classify_name === "" || classify_alias === "") {
                     alert("输入不能为空");
@@ -185,16 +191,21 @@
                 }
                 // $('#addModal').modal('show');    显示模态框
                 // $('#addModal').modal('hide');  隐藏模态框
-                category.add(classify_name, classify_alias, function(res) {
+                category.add(classify_name, classify_alias, res => {
                     // console.log(res)
-                    if (res.code === 200) {
+                    let {
+                        code,
+                        msg,
+                    } = res
+                    console.log(res)
+                    if (code === 200) {
                         console.log("添加成功");
                         show()
                         $("#classify_name").val("");
                         $("#classify_alias").val("")
                         $('#addModal').modal('hide')
                     } else {
-                        alert(res.msg)
+                        alert(msg)
 
 
                     }
@@ -202,7 +213,7 @@
 
             })
             // 点击关闭隐藏模态框
-        $("#model_shutoff").click(function() {
+        $("#model_shutoff").click(() => {
             $('#addModal').modal('hide')
 
         })
@@ -210,28 +221,32 @@
         // 点击编辑按钮显示修改模态框，把内容显示在页面上，判断是否为空，调取接口修改类型
         $("#list_body").on("click", ".edit", function() {
             $('#editModal').modal('show');
-            var name = $(this).attr("data_name");
-            var slug = $(this).attr("data_slug");
-            var id = $(this).attr("data_id");
+            let name = $(this).attr("data_name");
+            let slug = $(this).attr("data_slug");
+            let id = $(this).attr("data_id");
             console.log(name, slug, id)
             $("#classify_name_dit").val(name)
             $("#classify_alias_dit").val(slug)
             $("#classify_id_dit").val(id)
 
             // 点击修改保存调取接口
-            $("#model_edit").click(function() {
+            $("#model_edit").click(() => {
                 // console.log("ASDasd")
-                var name = $("#classify_name_dit").val().trim();
-                var slug = $("#classify_alias_dit").val().trim();
-                var id = $("#classify_id_dit").val().trim();
+                let name = $("#classify_name_dit").val().trim();
+                let slug = $("#classify_alias_dit").val().trim();
+                let id = $("#classify_id_dit").val().trim();
                 if (name === "" || slug === "") {
                     alert("输入不能为空")
                     return;
                 }
-                category.edit(id, name, slug, function(res) {
+                category.edit(id, name, slug, res => {
                     console.log(res)
-                    if (res.code === 200) {
-                        alert(res.msg)
+                    let {
+                        code,
+                        msg
+                    } = res
+                    if (code === 200) {
+                        alert(msg)
                         show();
                         $('#editModal').modal('hide')
                     }
@@ -244,4 +259,4 @@
 
 </body>
 
-</html>
+</htlet

@@ -108,31 +108,31 @@
 
     <script>
         // 文章类别分类显示
-        category.show(function(res) {
-                var htmlStr = template("cate_temp", res)
+        category.show(res => {
+                let htmlStr = template("cate_temp", res)
                     // console.log(res, htmlStr)
                 $("#selCategory").html(htmlStr)
 
             })
             // 文章封面的显示
         $("#exampleInputFile").change(function() {
-            var img = this.files[0];
-            var img_src = URL.createObjectURL(img)
+            let img = this.files[0];
+            let img_src = URL.createObjectURL(img)
             console.log(img_src)
             $(".xianshi img").prop("src", img_src)
         })
 
         // 点击发布通过fd获得表单信息，调用接口 参数传入接口
-        $("#issue").click(function() {
-            var fd = new FormData(document.getElementById("myform"));
+        $("#issue").click(() => {
+            let fd = new FormData(document.getElementById("myform"));
             fd.append("state", "已发布");
             fd.set('content', tinyMCE.activeEditor.getContent())
             console.log(fd.get("content"))
-            article.add(fd, function(res) {
+            article.add(fd, res => {
                 console.log(res)
             })
         })
     </script>
 </body>
 
-</html>
+</h let
